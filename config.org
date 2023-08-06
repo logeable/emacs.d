@@ -17,6 +17,7 @@
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
   - [[#disable-gnu-emacs-message-on-startup][Disable 'GNU Emacs' message on startup]]
+  - [[#highlight-current-line][Highlight current line]]
 - [[#all-the-icons][ALL THE ICONS]]
 - [[#completion][COMPLETION]]
   - [[#vertico][Vertico]]
@@ -212,9 +213,14 @@ Let's make GNU Emacs look a little better.
 
 ** Disable 'GNU Emacs' message on startup
 #+begin_src emacs-lisp
-(setq inhibit-startup-screen t)
+  (setq inhibit-startup-screen t)
 #+end_src
 
+** Highlight current line
+#+begin_src emacs-lisp
+  (global-hl-line-mode 1)
+#+end_src
+: 
 * ALL THE ICONS
 A utility package to collect various Icon Fonts and propertize them within Emacs.
 #+begin_src emacs-lisp
