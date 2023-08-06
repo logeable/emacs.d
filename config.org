@@ -23,6 +23,7 @@
   - [[#orderless][Orderless]]
   - [[#company-mode][Company Mode]]
   - [[#marginalia][Marginalia]]
+  - [[#consult][Consult]]
 - [[#org-mode][ORG MODE]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -272,6 +273,15 @@ Adds marginalia to the minibuffer completions.
     ;; the mode gets enabled right away. Note that this forces loading the
     ;; package.
     (marginalia-mode))
+
+#+end_src
+** Consult
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind(
+         ("C-s" . consult-line)
+    )
+  )
 
 #+end_src
 
