@@ -7,9 +7,11 @@
 * TABLE OF CONTENTS :toc:
 - [[#important-programs-to-load][IMPORTANT PROGRAMS TO LOAD]]
   - [[#elpaca-package-manager][Elpaca Package Manager]]
+  - [[#install-use-package][Install Use-Package]]
   - [[#set-exec-path-from-shell][Set Exec-Path From Shell]]
   - [[#load-evil-mode][Load Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
+- [[#themes][THEMES]]
 - [[#fonts][FONTS]]
 - [[#gui-tweaks][GUI TWEAKS]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
@@ -21,6 +23,7 @@
   - [[#enabling-org-bullets][Enabling Org Bullets]]
   - [[#disable-eletric-indent][Disable Eletric Indent]]
   - [[#source-code-block-tag-expansion][Source Code Block Tag Expansion]]
+- [[#rainbow-mode][RAINBOW MODE]]
 - [[#sudo-edit][SUDO EDIT]]
 - [[#shell-and-terminal][SHELL AND TERMINAL]]
   - [[#eshell][Eshell]]
@@ -68,16 +71,7 @@
   (elpaca `(,@elpaca-order))
 #+end_src
 
-** Set Exec-Path From Shell
-#+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :if (memq window-system '(ns mac))
-    :ensure t
-    :config
-    (setq exec-path-from-shell-arguments '("-l"))
-    (exec-path-from-shell-initialize))
-#+end_src
-** Load Evil Mode
+** Install Use-Package
 #+begin_src emacs-lisp
   ;; Install use-package support
   (elpaca elpaca-use-package
@@ -96,6 +90,18 @@
   ;;(use-package general :demand t)
   ;;(elpaca-wait)
 
+#+end_src
+** Set Exec-Path From Shell
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :if (memq window-system '(ns mac))
+    :ensure t
+    :config
+    (setq exec-path-from-shell-arguments '("-l"))
+    (exec-path-from-shell-initialize))
+#+end_src
+** Load Evil Mode
+#+begin_src emacs-lisp
   ;; Expands to: (elpaca evil (use-package evil :demand t))
   (use-package evil
     :init
@@ -170,6 +176,12 @@
     )
 #+end_src
 
+* THEMES
+The first of te two lines below designates the directory where will place all of our themes. The second line loads our chosen theme which is *logeable* , a theme that I created with the help of the [[https://emacsfodder.github.io/emacs-theme-editor/][Emacs Theme Editor]].
+#+begin_src emacs-lisp
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (load-theme 'logeable t)
+#+end_src
 * FONTS
 Defining the various fonts that Emacs will use.
 #+begin_src emacs-lisp
@@ -244,6 +256,11 @@ Org-tempo is not a separate pacakge but a module within org that can be enabled.
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
+#+end_src
+* RAINBOW MODE
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :hook org-mode prog-mode)
 #+end_src
 * SUDO EDIT
 #+begin_src emacs-lisp
