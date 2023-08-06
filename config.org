@@ -16,9 +16,13 @@
 - [[#gui-tweaks][GUI TWEAKS]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
+  - [[#disable-gnu-emacs-message-on-startup][Disable 'GNU Emacs' message on startup]]
 - [[#all-the-icons][ALL THE ICONS]]
-- [[#ivy-counsel][IVY (COUNSEL)]]
-- [[#company-mode][COMPANY MODE]]
+- [[#completion][COMPLETION]]
+  - [[#vertico][Vertico]]
+  - [[#orderless][Orderless]]
+  - [[#company-mode][Company Mode]]
+  - [[#marginalia][Marginalia]]
 - [[#org-mode][ORG MODE]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -205,6 +209,11 @@ Let's make GNU Emacs look a little better.
   (global-visual-line-mode 1)
 #+end_src
 
+** Disable 'GNU Emacs' message on startup
+#+begin_src emacs-lisp
+(setq inhibit-startup-screen t)
+#+end_src
+
 * ALL THE ICONS
 A utility package to collect various Icon Fonts and propertize them within Emacs.
 #+begin_src emacs-lisp
@@ -212,25 +221,28 @@ A utility package to collect various Icon Fonts and propertize them within Emacs
     :if (display-graphic-p))
 #+end_src
 
-* IVY (COUNSEL)
-+ Ivy, a generic completion mechainism for Emacs.
-+ Counsel , a collection of Ivy-enhanced versions of common Emacs commands.
-+ Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
+* COMPLETION
+** Vertico
 #+begin_src emacs-lisp
-  (use-package counsel
-    :after ivy
-    :config (counsel-mode))
-
-  (use-package ivy
+  (use-package vertico
+    :ensure t
     :config
-    (ivy-mode)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq enable-recursive-minibuffers t))
-
+    (vertico-mode t))
 #+end_src
-* COMPANY MODE
+** Orderless
+#+begin_src emacs-lisp
+  (use-package orderless
+    :init
+    ;; Configure a custom style dispatcher (see the Consult wiki)
+    ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
+    ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+** Company Mode
 #+begin_src emacs-lisp
   (use-package company
     :bind (:map company-active-map
@@ -242,6 +254,26 @@ A utility package to collect various Icon Fonts and propertize them within Emacs
 
 #+end_src
 
+** Marginalia
+Adds marginalia to the minibuffer completions.
+#+begin_src emacs-lisp
+  ;; Enable rich annotations using the Marginalia package
+  (use-package marginalia
+    ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+    ;; available in the *Completions* buffer, add it to the
+    ;; `completion-list-mode-map'.
+    :bind (:map minibuffer-local-map
+                ("M-A" . marginalia-cycle))
+
+    ;; The :init section is always executed.
+    :init
+
+    ;; Marginalia must be activated in the :init section of use-package such that
+    ;; the mode gets enabled right away. Note that this forces loading the
+    ;; package.
+    (marginalia-mode))
+
+#+end_src
 
 * ORG MODE
 ** Enabling Table of Contents
