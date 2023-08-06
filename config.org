@@ -18,6 +18,7 @@
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
 - [[#all-the-icons][ALL THE ICONS]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
+- [[#company-mode][COMPANY MODE]]
 - [[#org-mode][ORG MODE]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -229,6 +230,18 @@ A utility package to collect various Icon Fonts and propertize them within Emacs
     (setq enable-recursive-minibuffers t))
 
 #+end_src
+* COMPANY MODE
+#+begin_src emacs-lisp
+  (use-package company
+    :bind (:map company-active-map
+                ("C-n" . company-select-next)
+                ("C-p" . company-select-previous))
+    :config
+    (setq company-idle-delay 0.3)
+    (global-company-mode t))
+
+#+end_src
+
 
 * ORG MODE
 ** Enabling Table of Contents
